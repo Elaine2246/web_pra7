@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Budget Calculator App</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+
+        .container {
+            width: 600px;
+            margin: auto;
+        }
+         h3 {
+            background-color: black;
+            color: white;
+            padding: 8px;
+        }
+
+        input {
+            width: 60px;
+            padding: 5px;
+            margin: 10px;
+        }
+
+        #amount {
+            width: 80px;
+        }
+
+        button {
+            background-color: darkblue;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .result {
+            display: inline-block;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            font-size: 12px;
+        }
+         #room {
+            background-color: blue;
+        }
+
+        #accessories {
+            background-color: green;
+        }
+
+        #emergency {
+            background-color: blue;
+        }
+
+        #saving {
+            background-color: deeppink;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Budget Calculator App</h3>
+
+    <p>Enter Amount that you want to Manage</p>
+
+    <input type="number" id="amount" value="15000">
+
+    <p>How would you like to divide your money?</p>
+
+    <label>Room Rent(%):</label>
+    <input type="number" id="roomPercent" value="50">
+
+    <label>Accessories(%):</label>
+    <input type="number" id="accessoriesPercent" value="20">
+
+    <label>Emergency(%):</label>
+    <input type="number" id="emergencyPercent" value="20">
+
+    <label>Saving(%):</label>
+    <input type="number" id="savingPercent" value="10">
+
+    <br>
+
+    <button id="evaluate">Evaluate My Money</button>
+
+    <br><br>
+
+    <div id="output"></div>
+
+</div>
+
+<script>
+
+$(document).ready(function() {
+
+    $("#evaluate").click(function() {
+
+        var amount = Number($("#amount").val());
+
+        var roomPercent = Number($("#roomPercent").val());
+        var accessoriesPercent = Number($("#accessoriesPercent").val());
+        var emergencyPercent = Number($("#emergencyPercent").val());
+        var savingPercent = Number($("#savingPercent").val());
+
+        var totalPercent = roomPercent + accessoriesPercent + emergencyPercent + savingPercent;
+
+        if (totalPercent != 100) {
+
+            alert("Percentage values must add up to 100%.");
+
+            $("#output").html("");
+
+        } else {
+
+            var roomAmount = amount * roomPercent / 100;
+            var accessoriesAmount = amount * accessoriesPercent / 100;
+            var emergencyAmount = amount * emergencyPercent / 100;
+            var savingAmount = amount * savingPercent / 100;
+
+            $("#output").html(
+                "<span class='result' id='room'>Room Rent: Rs." + roomAmount + "</span>" +
+                "<span class='result' id='accessories'>Accessories: Rs." + accessoriesAmount + "</span>" +
+                "<span class='result' id='emergency'>Emergency: Rs." + emergencyAmount + "</span>" +
+                "<span class='result' id='saving'>Saving: Rs." + savingAmount + "</span>"
+            );
+
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

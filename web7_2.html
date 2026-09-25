@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cake Shop</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #fff0f5;
+            margin: 0;
+            text-align: center;
+        }
+
+        .header {
+            background-color: #c2185b;
+            color: white;
+            padding: 15px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .shop {
+            width: 850px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            color: #c2185b;
+        }
+
+        .cakes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .cake {
+            width: 170px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff8fa;
+        }
+
+        .cake img {
+            width: 150px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cake h3 {
+            color: #c2185b;
+            font-size: 16px;
+        }
+
+        .price {
+            font-weight: bold;
+        }
+
+        .quantity {
+            width: 40px;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: #c2185b;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #880e4f;
+        }
+
+        #bill {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fce4ec;
+            border-radius: 10px;
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #aaa;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #c2185b;
+            color: white;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #c2185b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        CAKE SHOP
+    </div>
+
+    <div class="shop">
+
+        <h2>Choose Your Cake</h2>
+
+        <div class="cakes">
+
+            <div class="cake">
+                <img src="chocolate.png">
+
+                <h3>Chocolate Cake</h3>
+
+                <p class="price">Rs. 300</p>
+
+                <button class="btn minus" data-id="chocolate">-</button>
+
+                <input type="text" class="quantity" id="chocolate" value="0">
+
+                <button class="btn plus" data-id="chocolate">+</button>
+            </div>
+
+
+            <div class="cake">
+                <img src="brown.png">
+
+                <h3>Brown Cake</h3>
+
+                <p class="price">Rs. 200</p>
+
+                <button class="btn minus" data-id="brown">-</button>
+
+                <input type="text" class="quantity" id="brown" value="0">
+
+                <button class="btn plus" data-id="brown">+</button>
+            </div>
+
+
+            <div class="cake">
+                <img src="milky.png">
+
+                <h3>Milky Cake</h3>
+
+                <p class="price">Rs. 250</p>
+
+                <button class="btn minus" data-id="milky">-</button>
+
+                <input type="text" class="quantity" id="milky" value="0">
+
+                <button class="btn plus" data-id="milky">+</button>
+            </div>
+
+
+            <div class="cake">
+                <img src="blackforest.png">
+
+                <h3>Black Forest</h3>
+
+                <p class="price">Rs. 350</p>
+
+                <button class="btn minus" data-id="blackforest">-</button>
+
+                <input type="text" class="quantity" id="blackforest" value="0">
+
+                <button class="btn plus" data-id="blackforest">+</button>
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="btn" id="order">
+            Place Order
+        </button>
+
+
+        <div id="bill">
+
+            <h2>Purchase Order Bill</h2>
+
+            <table>
+
+                <tr>
+                    <th>Cake</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+
+                <tbody id="billBody"></tbody>
+
+            </table>
+
+            <p class="total">
+                Grand Total: Rs.
+                <span id="grandTotal">0</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        $(document).ready(function() {
+
+            $(".plus").click(function() {
+
+                var id = $(this).data("id");
+
+                var quantity = Number($("#" + id).val());
+
+                quantity = quantity + 1;
+
+                $("#" + id).val(quantity);
+
+            });
+
+
+            $(".minus").click(function() {
+
+                var id = $(this).data("id");
+
+                var quantity = Number($("#" + id).val());
+
+                if (quantity > 0) {
+                    quantity = quantity - 1;
+                }
+
+                $("#" + id).val(quantity);
+
+            });
+
+
+            $("#order").click(function() {
+
+                var chocolate = Number($("#chocolate").val());
+
+                var brown = Number($("#brown").val());
+
+                var milky = Number($("#milky").val());
+
+                var blackforest = Number($("#blackforest").val());
+
+
+                var totalQuantity =
+                    chocolate +
+                    brown +
+                    milky +
+                    blackforest;
+
+
+                if (totalQuantity == 0) {
+
+                    alert("Please select at least one cake.");
+
+                    return;
+                }
+
+
+                var grandTotal = 0;
+
+                $("#billBody").html("");
+
+
+                if (chocolate > 0) {
+
+                    var total = chocolate * 300;
+
+                    $("#billBody").append(
+                        "<tr>" +
+                        "<td>Chocolate Cake</td>" +
+                        "<td>" + chocolate + "</td>" +
+                        "<td>Rs. 300</td>" +
+                        "<td>Rs. " + total + "</td>" +
+                        "</tr>"
+                    );
+
+                    grandTotal = grandTotal + total;
+                }
+
+
+                if (brown > 0) {
+
+                    var total = brown * 200;
+
+                    $("#billBody").append(
+                        "<tr>" +
+                        "<td>Brown Cake</td>" +
+                        "<td>" + brown + "</td>" +
+                        "<td>Rs. 200</td>" +
+                        "<td>Rs. " + total + "</td>" +
+                        "</tr>"
+                    );
+
+                    grandTotal = grandTotal + total;
+                }
+
+
+                if (milky > 0) {
+
+                    var total = milky * 250;
+
+                    $("#billBody").append(
+                        "<tr>" +
+                        "<td>Milky Cake</td>" +
+                        "<td>" + milky + "</td>" +
+                        "<td>Rs. 250</td>" +
+                        "<td>Rs. " + total + "</td>" +
+                        "</tr>"
+                    );
+
+                    grandTotal = grandTotal + total;
+                }
+
+
+                if (blackforest > 0) {
+
+                    var total = blackforest * 350;
+
+                    $("#billBody").append(
+                        "<tr>" +
+                        "<td>Black Forest Cake</td>" +
+                        "<td>" + blackforest + "</td>" +
+                        "<td>Rs. 350</td>" +
+                        "<td>Rs. " + total + "</td>" +
+                        "</tr>"
+                    );
+
+                    grandTotal = grandTotal + total;
+                }
+
+
+                $("#grandTotal").text(grandTotal);
+
+                $("#bill").slideDown();
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
